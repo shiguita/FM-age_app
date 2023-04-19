@@ -1,0 +1,137 @@
+:root {
+  --white: hsl(0, 0%, 100%);
+  --off-white: hsl(0, 0%, 94%);
+  --light-grey: hsl(0, 0%, 86%);
+  --Smokey-grey: hsl(0, 1%, 44%);
+  --off-black: hsl(0, 0%, 8%);
+  --purple: hsl(259, 100%, 65%);
+  --light-red: hsl(0, 100%, 67%);
+}
+@font-face {
+  font-family: "Poppins Regular";
+  src: url(assets/fonts/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: "Poppins Bold";
+  src: url(assets/fonts/Poppins-Bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Poppins Extra Bold Italic";
+  src: url(assets/fonts/Poppins-ExtraBoldItalic.ttf);
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Poppins Italic";
+  src: url(assets/fonts/Poppins-Italic.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--off-white);
+}
+
+main {
+  align-self: center;
+  width: 600px;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 1.5rem 1.5rem 10rem;
+}
+
+hr {
+  margin: 20px 0;
+  border: 0;
+  height: 0;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+input {
+  font-family: "Poppins Bold";
+  font-size: 24px;
+  text-indent: 10px;
+  caret-color: var(--purple);
+  width: 7.5rem;
+  height: 3.5rem;
+  padding: 2px;
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none !important;
+  border: 1px solid var(--purple);
+}
+
+span {
+  color: var(--purple);
+}
+
+.inputs {
+  margin-bottom: 0.5rem;
+  color: var(--Smokey-grey);
+  font-family: "Poppins Bold", sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 140px);
+  grid-template-rows: 1.5rem 1fr 1.5rem;
+  grid-auto-flow: column;
+}
+
+.submit {
+  position: absolute;
+  right: 450px;
+  top: 290px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--purple);
+}
+
+.submit:hover {
+  background-color: var(--off-black);
+}
+
+.icon {
+  left: 20%;
+  top: 20%;
+  position: relative;
+  height: 44px;
+  width: 46px;
+  background-image: url(assets/images/icon-arrow.svg);
+}
+
+.content {
+  font-family: "Poppins Extra Bold Italic", sans-serif;
+  font-size: 70px;
+  line-height: 80px;
+}
+
+#MM {
+  grid-row-start: 2;
+}
+
+#YYYY {
+  grid-row-start: 2;
+}
+
+#errDay {
+  grid-row-start: 3;
+  grid-column-start: 1;
+}
+
+#errMonth {
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
