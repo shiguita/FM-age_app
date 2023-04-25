@@ -16,79 +16,33 @@
   </head>
   <body>
     <main>
-      <form>
+      <form action="#" id="form">
         <div class="inputs">
           <label>DAY</label>
-          <input type="number" id="DD" placeholder="DD" />
-          <label style="grid-column-start: 2">MONTH</label>
-          <input type="number" id="MM" placeholder="MM" />
-          <label style="grid-column-start: 3">YEAR</label>
-          <input type="number" id="YYYY" placeholder="YYYY" />
-          <div id="errDay"></div>
-          <div id="errMonth"></div>
-          <div id="errYear"></div>
+          <input type="number" id="day" name="day" placeholder="DD" />
+          <p class="errmsg"></p>
+          <label>MONTH</label>
+          <input type="number" id="month" name="month" placeholder="MM" />
+          <p class="errmsg"></p>
+          <label>YEAR</label>
+          <input type="number" id="year" name="year" placeholder="YYYY" />
+          <p class="errmsg"></p>
         </div>
-        <div class="submit" onclick="calcAge()"><div class="icon"></div></div>
+        <button type="submit">
+          <img
+            src="./assets/images/icon-arrow.svg"
+            alt="Submit button"
+            style="width: 60%"
+          />
+        </button>
       </form>
       <hr />
-      <div class="content">
-        <div><span id="years">- -</span> years</div>
-        <div><span id="months">- -</span> months</div>
-        <div><span id="days">- -</span> days</div>
-      </div>
+      <section class="content">
+        <h2><span id="render-output-year">- -</span> years</h2>
+        <h2><span id="render-output-month">- -</span> months</h2>
+        <h2><span id="render-output-day">- -</span> days</h2>
+      </section>
     </main>
-    <script>
-      function calcAge() {
-        let invalid = false;
-        const year = +document.getElementById("YYYY").value;
-        const month = +document.getElementById("MM").value;
-        const day = +document.getElementById("DD").value;
-        if (day > 31 || day < 1) {
-          document.getElementById("DD").style.borderColor = "hsl(0, 100%, 67%)";
-          document.getElementById("errDay").innerHTML = "Must be a valid day";
-          invalid = true;
-        }
-        if (month > 12 || month < 1) {
-          document.getElementById("MM").style.borderColor = "hsl(0, 100%, 67%)";
-          document.getElementById("errMonth").innerHTML =
-            "Must be a valid month";
-          invalid = true;
-        }
-        if (year > 2023) {
-          document.getElementById("YYYY").style.borderColor =
-            "hsl(0, 100%, 67%)";
-          document.getElementById("errYear").innerHTML = "Must be in the past";
-          invalid = true;
-        }
-        if (invalid) return;
-
-        const values =
-          document.getElementById("YYYY").value +
-          "-" +
-          document.getElementById("MM").value +
-          "-" +
-          document.getElementById("DD").value;
-
-        const EPOCH = new Date(0);
-        const EPOCH_YEAR = EPOCH.getUTCFullYear();
-        const EPOCH_MONTH = EPOCH.getUTCMonth();
-        const EPOCH_DAY = EPOCH.getUTCDate();
-        const diff = new Date(Date.now() - new Date(values).getTime());
-        const days = Math.abs(diff.getUTCDate() - EPOCH_DAY);
-        const months = Math.abs(diff.getUTCMonth() - EPOCH_MONTH);
-        const years = Math.abs(diff.getUTCFullYear() - EPOCH_YEAR);
-        if (isNaN(days) || isNaN(months) || isNaN(years)) {
-          document.getElementById("errDay").innerHTML = "Must be a valid date";
-          document.getElementById("DD").style.borderColor = "hsl(0, 100%, 67%)";
-          document.getElementById("MM").style.borderColor = "hsl(0, 100%, 67%)";
-          document.getElementById("YYYY").style.borderColor =
-            "hsl(0, 100%, 67%)";
-          return;
-        }
-        document.getElementById("days").innerHTML = days;
-        document.getElementById("months").innerHTML = months;
-        document.getElementById("years").innerHTML = years;
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
