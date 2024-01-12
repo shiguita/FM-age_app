@@ -5,8 +5,8 @@ const outputDay = document.getElementById("render-output-day");
 const outputMonth = document.getElementById("render-output-month");
 const outputYear = document.getElementById("render-output-year");
 
-// This function renders error messages based on the validation status of an input field.
-const renderError = function (status, element, aux1, aux2) {
+// This function renders error messages after validating an input field.
+const renderError = function (status, element, elem2, elem3) {
   const msgError = element.nextElementSibling; // The next element of the same parent
   const fieldName = element.name;
 
@@ -19,23 +19,19 @@ const renderError = function (status, element, aux1, aux2) {
       msgError.textContent = `Must be a valid ${fieldName.toLowerCase()}`;
       element.style.borderColor = "hsl(0, 100%, 67%)";
       break;
-    case "futureYear":
-      msgError.textContent = "Cannot be greater than current year";
-      element.style.borderColor = "hsl(0, 100%, 67%)";
-      break;
     case "futureDate":
       msgError.textContent = "Cannot be in the future";
       console.log(msgError.textContent);
       element.style.borderColor = "hsl(0, 100%, 67%)";
-      aux1.style.borderColor = "hsl(0, 100%, 67%)";
-      aux2.style.borderColor = "hsl(0, 100%, 67%)";
+      elem2.style.borderColor = "hsl(0, 100%, 67%)";
+      elem3.style.borderColor = "hsl(0, 100%, 67%)";
       break;
     case "invalidDate":
       msgError.textContent = "Must be a valid date";
       console.log(msgError.textContent);
       element.style.borderColor = "hsl(0, 100%, 67%)";
-      aux1.style.borderColor = "hsl(0, 100%, 67%)";
-      aux2.style.borderColor = "hsl(0, 100%, 67%)";
+      elem2.style.borderColor = "hsl(0, 100%, 67%)";
+      elem3.style.borderColor = "hsl(0, 100%, 67%)";
       break;
     default:
       msgError.textContent = "";
@@ -43,60 +39,56 @@ const renderError = function (status, element, aux1, aux2) {
   }
 };
 const validateYear = (inputYear) => {
-  // Checking if the input value is empty
+  // Checking if the input field is empty
   if (inputYear.value === "") {
     renderError("empty", inputYear);
     return false;
   }
 
-  // Checking if the input value is not between 1 and the last day of the month
-  if (inputYear.value < 1) {
+  // For the year we have to make a concession and only accept values
+  // over 3 digits because of how the date constructor parses the string (line 135)
+  if (inputYear.value < 100) {
     renderError("invalid", inputYear);
     return false;
   }
 
-  // Checking if the input value is not between 1 and the last day of the month
-  if (inputYear.value > new Date().getFullYear()) {
-    renderError("future", inputYear);
-    return false;
-  }
-
-  // If input value is valid, then clear any error message and return true
+  // If the value is valid, then clear any error message and return true
   renderError("", inputYear);
   return true;
 };
+
 const validateMonth = (inputMonth) => {
-  // Checking if the input value is empty
+  // Checking if the input field is empty
   if (inputMonth.value === "") {
     renderError("empty", inputMonth);
     return false;
   }
 
-  // Checking if the input value is not between 1 and the last day of the month
+  // Checking if the value given is not a valid month
   if (inputMonth.value > 12 || inputMonth.value < 1) {
     renderError("invalid", inputMonth);
     return false;
   }
 
-  // If input value is valid, then clear any error message and return true
+  // If the value is valid, then clear any error message and return true
   renderError("", inputMonth);
   return true;
 };
 
 const validateDay = (inputDay) => {
-  // Checking if the input value is empty
+  // Checking if the input field is empty
   if (inputDay.value === "") {
     renderError("empty", inputDay);
     return false;
   }
 
-  // Checking if the input value is not between 1 and the last day of the month
+  // Checking if the value given is not a valid day
   if (inputDay.value > 31 || inputDay.value < 1) {
     renderError("invalid", inputDay);
     return false;
   }
 
-  // If input value is valid, then clear any error message and return true
+  // If the value is valid, then clear any error message and return true
   renderError("", inputDay);
   return true;
 };
@@ -114,6 +106,8 @@ const validateDate = (inputDay, inputMonth, inputYear, birth) => {
     return false;
   }
 
+  console.log(birth);
+  console.log(today);
   if (birth > today) {
     renderError("futureDate", inputDay, inputMonth, inputYear);
     return false;
@@ -128,16 +122,17 @@ document.getElementById("form").addEventListener("submit", function (e) {
   const inputDay = document.getElementById("day");
   const inputMonth = document.getElementById("month");
   const inputYear = document.getElementById("year");
+  console.log(inputYear.value);
 
-  // Check if the input values are valid by calling the respective validation functions
-  // If any validation function returns false, exit the function and do not proceed further
+  // Check if the submitted values are valid
+  // If any validation function returns false the process ends
   const vDay = validateDay(inputDay);
   const vMonth = validateMonth(inputMonth);
   const vYear = validateYear(inputYear);
   if (!vDay || !vMonth || !vYear) return;
 
   // If input values are valid, create a new Date object based on the input values
-  const birth = new Date(
+  const birth = new Date( // This is a simple way of creating a Date, for a more robust way see docs
     `${inputYear.value}-${inputMonth.value}-${inputDay.value}`
   );
 
